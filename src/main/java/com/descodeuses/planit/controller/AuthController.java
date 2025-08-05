@@ -15,6 +15,9 @@ import com.descodeuses.planit.dto.AuthRequest;
 import com.descodeuses.planit.dto.AuthResponse;
 import com.descodeuses.planit.security.JwtUtil;
 import com.descodeuses.planit.service.LogDocumentService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -42,5 +45,11 @@ public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
     String token = jwtUtil.generateToken(request.getUsername());
     return ResponseEntity.ok(new AuthResponse(token));
 }
+@GetMapping("/hello")
+    public String Hello() {
+    
+        return "Hello !";
+    }
+
 
 }
