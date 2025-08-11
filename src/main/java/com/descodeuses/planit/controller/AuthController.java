@@ -13,10 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.descodeuses.planit.dto.AuthRequest;
 import com.descodeuses.planit.dto.AuthResponse;
+import com.descodeuses.planit.dto.SignupRequestDTO;
+import com.descodeuses.planit.dto.SignupResponseDTO;
+
 import com.descodeuses.planit.security.JwtUtil;
 import com.descodeuses.planit.service.LogDocumentService;
+import com.descodeuses.planit.service.UserService;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -32,6 +37,9 @@ public class AuthController {
 
     @Autowired
     private LogDocumentService logDocumentService;
+
+    @Autowired
+    private  UserService userService;
 
 @PostMapping("/login")
 public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
@@ -51,5 +59,17 @@ public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         return "Hello !";
     }
 
+ @PostMapping("/signup")
+    public ResponseEntity<?> register(@RequestBody SignupRequestDTO signupDTO) {
+        try {
+            SignupResponseDTO savedUser = userService.registerUser(signupDTO);
+            return ResponseEntity.ok(savedUser);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Erreur : " + e.getMessage());
+        }
+    }
 
+    
 }
+
+
